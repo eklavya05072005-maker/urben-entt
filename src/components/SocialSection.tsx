@@ -96,7 +96,7 @@ export default function SocialSection({ mediaGallery }: SocialSectionProps) {
               <span>Explore Gallery ({allPhotos.length})</span>
             </button>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/urban.entt?psln=c3FzcDN3d3RrNnV6&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-brand-silver hover:text-brand-red transition-colors"
