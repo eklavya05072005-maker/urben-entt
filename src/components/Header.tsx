@@ -9,7 +9,6 @@ const NAV_LINKS = [
   { name: 'Home', href: '/' },
   { name: 'Events', href: '/events' },
   { name: 'Past Events', href: '/past-events' },
-  { name: 'Services', href: '/services' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -45,20 +44,35 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Wordmark Logo */}
-        <Link
-          href="/"
-          className="group flex items-center space-x-2 text-white tracking-widest font-display text-xl sm:text-2xl font-black uppercase transition-transform hover:scale-[1.02]"
-          aria-label="URBEN.ENTT Home"
-        >
-          <span className="text-brand-silver group-hover:text-white transition-colors">
-            URBEN<span className="text-brand-red font-sans">.</span>ENTT
-          </span>
-          <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
-        </Link>
+        {/* Wordmark Logo & Separate Compact Partner Block */}
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+          <div className="flex flex-col">
+            <Link
+              href="/"
+              className="group flex items-center space-x-2 text-white tracking-widest font-display text-xl sm:text-2xl font-black uppercase transition-colors shrink-0 leading-none"
+              aria-label="URBEN.ENTT Home"
+            >
+              <span className="text-brand-silver group-hover:text-white transition-colors">
+                URBEN<span className="text-brand-red font-sans">.</span>ENTT
+              </span>
+              <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
+            </Link>
+            {/* Mobile partner indicator below logo */}
+            <span className="sm:hidden text-[8px] font-mono tracking-wider text-zinc-400 uppercase mt-1">
+              APEX <span className="text-brand-red">×</span> BLAH BLA
+            </span>
+          </div>
+
+          {/* Separate compact partner block beside the logo (Desktop & Tablet) */}
+          <div className="hidden sm:flex flex-col justify-center pl-3.5 border-l border-white/20 select-none shrink-0 leading-tight">
+            <span className="text-[10px] font-mono tracking-wider uppercase text-zinc-300 font-medium whitespace-nowrap">
+              APEX <span className="text-brand-red font-bold">×</span> BLAH BLA
+            </span>
+          </div>
+        </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-7" aria-label="Main Navigation">
+        <nav className="hidden lg:flex items-center space-x-8" aria-label="Main Navigation">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
             return (

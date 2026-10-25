@@ -18,13 +18,21 @@ import {
   Trash2,
   Send,
   Eye,
+  ImageIcon,
+  Video,
+  Copy,
+  Check,
+  Loader2,
 } from 'lucide-react';
-import { UrbenEvent, AdminUser, Enquiry, AuditLog, EventStatus } from '@/types';
+import { UrbenEvent, AdminUser, Enquiry, AuditLog, EventStatus, MediaGalleryItem } from '@/types';
 import EventModal from '@/components/admin/EventModal';
 import {
   fetchAdminEventsApi,
   fetchAdminEnquiriesApi,
   fetchAdminAuditApi,
+  fetchMediaGalleryApi,
+  uploadMediaApi,
+  deleteMediaApi,
   updateEventStatusApi,
   deleteEventApi,
 } from '@/lib/api';
@@ -36,12 +44,24 @@ interface AdminDashboardProps {
 
 export default function AdminDashboard({ initialUser, onLogout }: AdminDashboardProps) {
   const [user] = useState<AdminUser>(initialUser);
-  const [activeTab, setActiveTab] = useState<'events' | 'enquiries' | 'audit'>('events');
+  const [activeTab, setActiveTab] = useState<'events' | 'enquiries' | 'media' | 'audit'>('events');
   const [events, setEvents] = useState<UrbenEvent[]>([]);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
+  const [mediaGallery, setMediaGallery] = useState<MediaGalleryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actionMessage, setActionMessage] = useState<{ text: string; isError?: boolean } | null>(null);
+
+  // Upload Form State
+  const [uploadTitle, setUploadTitle] = useState('');
+  const [uploadCaption, setUploadCaption] = useState('');
+  const [uploadTag, setUploadTag] = useState('#URBEN');
+  const [uploadUrl, setUploadUrl] = useState('');
+  const [uploadBase64, setUploadBase64] = useState<string | null>(null);
+  const [uploadFileName, setUploadFileName] = useState('');
+  const [uploadFileType, setUploadFileType] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [copiedMediaId, setCopiedMediaId] = useState<string | null>(null);
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,15 +70,17 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
   const fetchDashboardData = async () => {
     setIsLoading(true);
     try {
-      const [eventsData, enquiriesData, auditData] = await Promise.all([
+      const [eventsData, enquiriesData, auditData, mediaData] = await Promise.all([
         fetchAdminEventsApi(),
         fetchAdminEnquiriesApi(),
         fetchAdminAuditApi(),
+        fetchMediaGalleryApi(),
       ]);
 
       setEvents(eventsData);
       setEnquiries(enquiriesData);
       setAuditLogs(auditData);
+      setMediaGallery(mediaData);
     } catch {
       setActionMessage({ text: 'Error fetching latest data', isError: true });
     } finally {
@@ -98,6 +120,84 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
     } catch {
       setActionMessage({ text: 'Network error deleting event', isError: true });
     }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadFileName(file.name);
+    setUploadFileType(file.type);
+    if (!uploadTitle) {
+      setUploadTitle(file.name.replace(/\.[^/.]+$/, ''));
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUploadBase64(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUploadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadBase64 && !uploadUrl) {
+      setActionMessage({ text: 'Please select a file to upload or enter a URL', isError: true });
+      return;
+    }
+
+    setIsUploading(true);
+    setActionMessage(null);
+    try {
+      const res = await uploadMediaApi({
+        fileName: uploadFileName,
+        fileType: uploadFileType,
+        dataBase64: uploadBase64 || undefined,
+        url: uploadUrl || undefined,
+        title: uploadTitle,
+        caption: uploadCaption,
+        tag: uploadTag,
+      });
+
+      if (!res.success) {
+        setActionMessage({ text: res.error || 'Upload failed', isError: true });
+      } else {
+        setActionMessage({ text: 'Media asset uploaded and saved to gallery successfully!' });
+        setUploadTitle('');
+        setUploadCaption('');
+        setUploadTag('#URBEN');
+        setUploadUrl('');
+        setUploadBase64(null);
+        setUploadFileName('');
+        setUploadFileType('');
+        fetchDashboardData();
+      }
+    } catch {
+      setActionMessage({ text: 'Network failure during media upload', isError: true });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleDeleteMedia = async (mediaId: string) => {
+    if (!confirm('Are you sure you want to remove this media asset?')) return;
+    try {
+      const res = await deleteMediaApi(mediaId);
+      if (!res.success) {
+        setActionMessage({ text: res.error || 'Delete failed', isError: true });
+      } else {
+        setActionMessage({ text: 'Media asset deleted successfully' });
+        fetchDashboardData();
+      }
+    } catch {
+      setActionMessage({ text: 'Network error deleting media', isError: true });
+    }
+  };
+
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedMediaId(id);
+    setTimeout(() => setCopiedMediaId(null), 2000);
   };
 
   const getStatusBadge = (status: EventStatus) => {
@@ -228,6 +328,19 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
             >
               <Mail className="w-3.5 h-3.5" />
               <span>Enquiries ({enquiries.length})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('media')}
+              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors ${
+                activeTab === 'media'
+                  ? 'bg-brand-red text-white font-bold'
+                  : 'bg-white/5 text-zinc-400 hover:text-white'
+              }`}
+            >
+              <UploadCloud className="w-3.5 h-3.5" />
+              <span>Media & Uploads ({mediaGallery.length})</span>
             </button>
 
             <button
@@ -459,7 +572,206 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
           </div>
         )}
 
-        {/* TAB 3: AUDIT TRAIL */}
+        {/* TAB 3: MEDIA & UPLOADS */}
+        {activeTab === 'media' && (
+          <div className="space-y-8">
+            {/* Upload Form Box */}
+            <div className="p-6 sm:p-8 bg-[#111111] border border-white/10 space-y-6">
+              <div className="flex items-center space-x-3 pb-4 border-b border-white/10">
+                <UploadCloud className="w-5 h-5 text-brand-red" />
+                <h3 className="text-base font-display font-bold text-white uppercase tracking-wider">
+                  UPLOAD PHOTOS & VIDEOS (OWNER / ADMIN)
+                </h3>
+              </div>
+
+              <form onSubmit={handleUploadSubmit} className="space-y-4 font-mono text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* File Upload Zone */}
+                  <div>
+                    <label className="block text-zinc-400 uppercase mb-1">
+                      Choose File (Image or Video)
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      onChange={handleFileSelect}
+                      className="w-full p-2 bg-[#090909] border border-white/15 text-zinc-300 file:mr-4 file:py-1.5 file:px-3 file:border-0 file:text-xs file:font-mono file:bg-brand-red file:text-white file:uppercase file:cursor-pointer hover:file:bg-brand-red-glow"
+                    />
+                    {uploadFileName && (
+                      <p className="text-[11px] text-zinc-500 mt-1">
+                        Selected: <span className="text-white">{uploadFileName}</span> ({uploadFileType})
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Or Direct URL */}
+                  <div>
+                    <label className="block text-zinc-400 uppercase mb-1">
+                      Or Direct Media URL / Path
+                    </label>
+                    <input
+                      type="text"
+                      value={uploadUrl}
+                      onChange={(e) => setUploadUrl(e.target.value)}
+                      placeholder="/assets/events/nocturne/main-poster.png or https://..."
+                      className="w-full p-2.5 bg-[#090909] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-zinc-400 uppercase mb-1">Title *</label>
+                    <input
+                      type="text"
+                      required
+                      value={uploadTitle}
+                      onChange={(e) => setUploadTitle(e.target.value)}
+                      placeholder="e.g. NOCTURNE Crowd Shot"
+                      className="w-full p-2.5 bg-[#090909] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-400 uppercase mb-1">Caption</label>
+                    <input
+                      type="text"
+                      value={uploadCaption}
+                      onChange={(e) => setUploadCaption(e.target.value)}
+                      placeholder="e.g. Peak time energy inside Mall of Asia"
+                      className="w-full p-2.5 bg-[#090909] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-zinc-400 uppercase mb-1">Tag (Hashtag)</label>
+                    <input
+                      type="text"
+                      value={uploadTag}
+                      onChange={(e) => setUploadTag(e.target.value)}
+                      placeholder="#Nocturne2026"
+                      className="w-full p-2.5 bg-[#090909] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end pt-2">
+                  <button
+                    type="submit"
+                    disabled={isUploading}
+                    className="px-6 py-2.5 bg-brand-red hover:bg-brand-red-glow text-white font-bold uppercase tracking-wider flex items-center space-x-2"
+                  >
+                    {isUploading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>UPLOADING TO STORE...</span>
+                      </>
+                    ) : (
+                      <>
+                        <UploadCloud className="w-4 h-4" />
+                        <span>SAVE TO MEDIA ARCHIVE</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Existing Uploaded Media Grid */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-display font-bold text-white uppercase tracking-wider">
+                  GALLERY ASSETS ({mediaGallery.length})
+                </h4>
+                <span className="text-[11px] font-mono text-zinc-500">
+                  First 4 photos appear on Homepage Instagram section; all photos viewable via Explore Gallery
+                </span>
+              </div>
+
+              {mediaGallery.length === 0 ? (
+                <div className="p-8 text-center bg-[#111111] border border-white/10 text-xs font-mono text-zinc-400">
+                  No media uploaded yet.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {mediaGallery.map((m, idx) => (
+                    <div
+                      key={m.id}
+                      className="bg-[#121212] border border-white/10 overflow-hidden flex flex-col justify-between group"
+                    >
+                      <div className="relative aspect-video w-full bg-black overflow-hidden">
+                        {m.mediaType === 'video' ? (
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-900 text-zinc-400">
+                            <Video className="w-8 h-8 text-brand-red mb-1" />
+                            <span className="text-[10px] font-mono">VIDEO ASSET</span>
+                          </div>
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={m.url}
+                            alt={m.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                        <span className="absolute top-2 left-2 px-1.5 py-0.5 text-[9px] font-mono uppercase bg-black/80 text-white border border-white/10">
+                          {idx < 4 && m.mediaType === 'image' ? 'HOMEPAGE #' + (idx + 1) : m.mediaType.toUpperCase()}
+                        </span>
+                      </div>
+
+                      <div className="p-4 space-y-2 font-mono text-xs flex-grow flex flex-col justify-between">
+                        <div>
+                          <div className="text-[10px] text-brand-red uppercase">{m.tag || '#URBEN'}</div>
+                          <h5 className="font-bold text-white text-sm truncate uppercase mt-0.5">
+                            {m.title}
+                          </h5>
+                          {m.caption && (
+                            <p className="text-[11px] text-zinc-400 line-clamp-2 mt-1 font-sans">
+                              {m.caption}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px]">
+                          <button
+                            type="button"
+                            onClick={() => copyToClipboard(m.url, m.id)}
+                            className="inline-flex items-center space-x-1 text-zinc-400 hover:text-white"
+                            title="Copy URL"
+                          >
+                            {copiedMediaId === m.id ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                <span className="text-emerald-400 text-[10px]">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span className="text-[10px]">Copy URL</span>
+                              </>
+                            )}
+                          </button>
+
+                          {user.role !== 'event_admin' && (
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteMedia(m.id)}
+                              className="text-zinc-500 hover:text-brand-red"
+                              title="Delete Media"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: AUDIT TRAIL */}
         {activeTab === 'audit' && (
           <div className="space-y-4">
             <div className="overflow-x-auto border border-white/10 bg-[#111111]">

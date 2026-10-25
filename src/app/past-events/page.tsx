@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'Retrospective of past underground club sessions, warehouse raves, and electronic music showcases produced by URBEN.ENTT in Bengaluru.',
 };
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function PastEventsPage() {
   const events = await fetchPublicEvents({ isPast: true });

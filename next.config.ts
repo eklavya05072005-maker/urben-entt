@@ -9,6 +9,7 @@ const backendHost = rawBackendUrl.trim().replace(/\/+$/, '').replace(/\/api$/, '
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  devIndicators: false,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

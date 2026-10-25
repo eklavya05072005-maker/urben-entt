@@ -20,10 +20,59 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Suppress unwanted dev indicator badges / N-shaped overlay */
+nextjs-portal,
+[data-nextjs-dev-overlay],
+[data-next-badge],
+.nextjs-toast-errors-parent {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Standard normal system cursor restoration */
+html,
+body {
+  cursor: auto;
+}
+
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+label[for] {
+  cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="datetime-local"],
+textarea {
+  cursor: text;
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
 }
 
 body {
@@ -31,8 +80,6 @@ body {
   background-color: #080808;
   color: #F7F7F7;
   overflow-x: hidden;
-  selection-background-color: #D92332;
-  selection-color: #FFFFFF;
 }
 
 ::selection {

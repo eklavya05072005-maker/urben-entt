@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function EventDetailPage({ params }: PageProps) {
   const { slug } = await params;
@@ -55,6 +55,21 @@ export default async function EventDetailPage({ params }: PageProps) {
   if (!event) {
     notFound();
   }
+
+  const formattedDate = (() => {
+    try {
+      const d = new Date(event.startDate);
+      if (isNaN(d.getTime())) return event.startDate;
+      return d.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    } catch {
+      return event.startDate;
+    }
+  })();
 
   return (
     <div className="pt-24 pb-24 bg-[#080808] min-h-screen text-brand-silver">
@@ -118,7 +133,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                   <Calendar className="w-4 h-4 text-brand-red mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-zinc-500 block uppercase">DATE & TIME</span>
-                    <span className="text-white font-semibold">Saturday, 31 October 2026</span>
+                    <span className="text-white font-semibold">{formattedDate}</span>
                     <span className="text-zinc-400 block">{event.timeDisplay}</span>
                   </div>
                 </div>
@@ -160,7 +175,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                   className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 bg-brand-red hover:bg-brand-red-glow text-white text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-xl shadow-brand-red/25"
                 >
                   <Ticket className="w-4 h-4" />
-                  <span>GET TICKETS ON SORTMYSCENE</span>
+                  <span>GET TICKETS ON {event.ticketingPlatform ? event.ticketingPlatform.toUpperCase() : 'SORTMYSCENE'}</span>
                 </a>
 
                 {event.googleMapsUrl && (

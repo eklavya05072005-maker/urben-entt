@@ -13,6 +13,18 @@ interface EventModalProps {
   user: AdminUser;
 }
 
+function toDatetimeLocal(val?: string): string {
+  if (!val) return '2026-11-15T18:00';
+  try {
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return val.slice(0, 16);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  } catch {
+    return val.slice(0, 16);
+  }
+}
+
 export default function EventModal({
   isOpen,
   onClose,
@@ -27,7 +39,7 @@ export default function EventModal({
     slug: event?.slug || '',
     tagline: event?.tagline || '',
     category: event?.category || 'Nightlife & Techno',
-    startDate: event?.startDate || '2026-11-15T18:00',
+    startDate: toDatetimeLocal(event?.startDate),
     timeDisplay: event?.timeDisplay || '6:00 PM – 11:00 PM',
     venueName: event?.venueName || '',
     city: event?.city || 'Bengaluru',
@@ -42,6 +54,7 @@ export default function EventModal({
     posterUrl: event?.posterUrl || '/assets/events/nocturne/main-poster.png',
     promoVideoUrl: event?.promoVideoUrl || '',
     isFeatured: event?.isFeatured || false,
+    isPast: event?.isPast || false,
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +87,14 @@ export default function EventModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Requirement: Upcoming events require a background/promo video before saving
+    const isUpcoming = !formData.isPast;
+    if (isUpcoming && !formData.promoVideoUrl?.trim()) {
+      setError('A background or promo video URL is required for upcoming events before saving.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -286,7 +307,40 @@ export default function EventModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block uppercase text-zinc-400 mb-1">Poster Asset Path</label>
+              <label className="block uppercase text-zinc-400 mb-1">Ticketing Platform</label>
+              <select
+                name="ticketingPlatform"
+                value={formData.ticketingPlatform}
+                onChange={handleChange}
+                className="w-full p-2.5 bg-[#0a0a0a] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+              >
+                <option value="SortMyScene">SortMyScene</option>
+                <option value="Direct RSVP">Direct RSVP</option>
+                <option value="Guestlist">Guestlist</option>
+                <option value="Exclusive">Exclusive</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block uppercase text-zinc-400 mb-1">Ticket Status</label>
+              <select
+                name="ticketStatus"
+                value={formData.ticketStatus}
+                onChange={handleChange}
+                className="w-full p-2.5 bg-[#0a0a0a] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+              >
+                <option value="Tickets Live">Tickets Live</option>
+                <option value="Filling Fast">Filling Fast</option>
+                <option value="Sold Out">Sold Out</option>
+                <option value="Free Entry w/ Registration">Free Entry w/ Registration</option>
+                <option value="Archived">Archived</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block uppercase text-zinc-400 mb-1">Poster Asset Path or URL</label>
               <input
                 type="text"
                 name="posterUrl"
@@ -298,33 +352,77 @@ export default function EventModal({
             </div>
 
             <div>
-              <label className="block uppercase text-zinc-400 mb-1">Ticketing URL</label>
+              <label className="block uppercase text-zinc-400 mb-1">
+                Promo / Background Video URL{' '}
+                {!formData.isPast ? (
+                  <span className="text-brand-red font-bold">* (Required for Upcoming)</span>
+                ) : (
+                  <span className="text-zinc-500 font-normal">(Optional for Past)</span>
+                )}
+              </label>
               <input
                 type="text"
-                name="ticketUrl"
-                value={formData.ticketUrl}
+                name="promoVideoUrl"
+                value={formData.promoVideoUrl}
                 onChange={handleChange}
-                placeholder="https://sortmyscene.com"
-                className="w-full p-2.5 bg-[#0a0a0a] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+                placeholder="/assets/videos/hero-promo.mov or URL"
+                className={`w-full p-2.5 bg-[#0a0a0a] border ${
+                  !formData.isPast && !formData.promoVideoUrl?.trim()
+                    ? 'border-brand-red/60 focus:border-brand-red'
+                    : 'border-white/15 focus:border-brand-red'
+                } text-white focus:outline-none`}
               />
+              {!formData.isPast && (
+                <p className="text-[10px] text-zinc-500 mt-1">
+                  Autoplays as the background visual on the homepage when this event is featured.
+                </p>
+              )}
             </div>
           </div>
 
-          {user.role !== 'event_admin' && (
-            <div className="flex items-center space-x-2 pt-2">
+          <div>
+            <label className="block uppercase text-zinc-400 mb-1">Ticket Buying Link</label>
+            <input
+              type="text"
+              name="ticketUrl"
+              value={formData.ticketUrl}
+              onChange={handleChange}
+              placeholder="https://sortmyscene.com/event/..."
+              className="w-full p-2.5 bg-[#0a0a0a] border border-white/15 text-white focus:border-brand-red focus:outline-none"
+            />
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                id="isFeatured"
-                name="isFeatured"
-                checked={formData.isFeatured}
+                id="isPast"
+                name="isPast"
+                checked={formData.isPast}
                 onChange={handleChange}
                 className="w-4 h-4 rounded bg-[#0a0a0a] border-white/20 text-brand-red focus:ring-brand-red"
               />
-              <label htmlFor="isFeatured" className="uppercase text-white font-bold cursor-pointer">
-                Set as Featured Headline Event on Homepage
+              <label htmlFor="isPast" className="uppercase text-white font-bold cursor-pointer">
+                Archive as Past Production (Show in Selected Productions & Archive)
               </label>
             </div>
-          )}
+
+            {user.role !== 'event_admin' && (
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="isFeatured"
+                  name="isFeatured"
+                  checked={formData.isFeatured}
+                  onChange={handleChange}
+                  className="w-4 h-4 rounded bg-[#0a0a0a] border-white/20 text-brand-red focus:ring-brand-red"
+                />
+                <label htmlFor="isFeatured" className="uppercase text-white font-bold cursor-pointer">
+                  Set as Featured Headline Event on Homepage
+                </label>
+              </div>
+            )}
+          </div>
 
           <div className="flex items-center justify-end space-x-3 pt-6 border-t border-white/10">
             <button

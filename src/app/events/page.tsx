@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     'Explore upcoming electronic music events, underground nightlife sessions, and headline productions curated by URBEN.ENTT in Bengaluru.',
 };
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function EventsPage() {
   const events = await fetchPublicEvents({ isPast: false });

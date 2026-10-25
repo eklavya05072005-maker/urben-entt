@@ -1,4 +1,4 @@
-import type { UrbenEvent, Collaborator, Enquiry, AdminUser, AuditLog, EventStatus } from '@/types';
+import type { UrbenEvent, Collaborator, Enquiry, AdminUser, AuditLog, EventStatus, MediaGalleryItem } from '@/types';
 
 /**
  * Returns the normalized backend API base URL.
@@ -78,7 +78,7 @@ export async function fetchPublicEvents(params?: {
 
     const qs = query.toString() ? `?${query.toString()}` : '';
     const res = await fetch(`${getApiBase()}/events/public${qs}`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     });
     if (!res.ok) return [];
     const data = await res.json();
@@ -92,7 +92,7 @@ export async function fetchPublicEvents(params?: {
 export async function fetchFeaturedEvent(): Promise<UrbenEvent | null> {
   try {
     const res = await fetch(`${getApiBase()}/events/featured`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     });
     if (!res.ok) return null;
     const data = await res.json();
@@ -106,7 +106,7 @@ export async function fetchFeaturedEvent(): Promise<UrbenEvent | null> {
 export async function fetchEventBySlug(slug: string): Promise<UrbenEvent | null> {
   try {
     const res = await fetch(`${getApiBase()}/events/slug/${encodeURIComponent(slug)}`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     });
     if (!res.ok) return null;
     const data = await res.json();
@@ -120,13 +120,27 @@ export async function fetchEventBySlug(slug: string): Promise<UrbenEvent | null>
 export async function fetchCollaborators(): Promise<Collaborator[]> {
   try {
     const res = await fetch(`${getApiBase()}/events/collaborators`, {
-      next: { revalidate: 120 },
+      cache: 'no-store',
     });
     if (!res.ok) return [];
     const data = await res.json();
     return data.collaborators || [];
   } catch (err) {
     console.error('Failed to fetch collaborators:', err);
+    return [];
+  }
+}
+
+export async function fetchMediaGalleryApi(): Promise<MediaGalleryItem[]> {
+  try {
+    const res = await fetch(`${getApiBase()}/media`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.media || [];
+  } catch (err) {
+    console.error('Failed to fetch media gallery:', err);
     return [];
   }
 }
@@ -345,5 +359,55 @@ export async function saveEventApi(
   } catch (err) {
     console.error('Save event error:', err);
     return { success: false, error: 'Network failure saving event' };
+  }
+}
+
+export async function uploadMediaApi(payload: {
+  fileName?: string;
+  fileType?: string;
+  dataBase64?: string;
+  url?: string;
+  title?: string;
+  caption?: string;
+  tag?: string;
+  mediaType?: 'image' | 'video';
+}): Promise<{ success: boolean; error?: string; media?: MediaGalleryItem }> {
+  try {
+    const res = await fetch(`${getApiBase()}/admin/media/upload`, {
+      method: 'POST',
+      headers: getRequestHeaders(),
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.error || 'Media upload failed' };
+    }
+
+    return { success: true, media: data.media };
+  } catch (err) {
+    console.error('Upload media API error:', err);
+    return { success: false, error: 'Network failure during media upload' };
+  }
+}
+
+export async function deleteMediaApi(mediaId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const res = await fetch(`${getApiBase()}/admin/media/${mediaId}`, {
+      method: 'DELETE',
+      headers: getRequestHeaders(),
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.error || 'Failed to delete media asset' };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Delete media API error:', err);
+    return { success: false, error: 'Network error deleting media asset' };
   }
 }

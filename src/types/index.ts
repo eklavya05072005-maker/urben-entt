@@ -125,3 +125,15 @@ export interface AuditLog {
   details?: Record<string, unknown>;
   createdAt: string;
 }
+
+export interface MediaGalleryItem {
+  id: string;
+  url: string;
+  mediaType: 'image' | 'video';
+  title: string;
+  caption?: string;
+  tag?: string;
+  uploadedBy?: string;
+  createdAt: string;
+}
+

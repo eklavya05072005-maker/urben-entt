@@ -83,18 +83,6 @@ export default function Footer() {
                 <span className="text-zinc-300">BLAH BLA</span>
                 <span className="text-[10px] text-zinc-600 block">Energy Unleashed</span>
               </li>
-              <li>
-                <a
-                  href="https://sortmyscene.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-brand-red transition-colors inline-flex items-center space-x-1"
-                >
-                  <span>SortMyScene</span>
-                  <ArrowUpRight className="w-3 h-3 text-brand-red" />
-                </a>
-                <span className="text-[10px] text-zinc-600 block">Official Ticketing</span>
-              </li>
             </ul>
           </div>
 

@@ -11,6 +11,25 @@ interface FeaturedEventSectionProps {
 }
 
 export default function FeaturedEventSection({ event }: FeaturedEventSectionProps) {
+  const formattedDate = React.useMemo(() => {
+    try {
+      const d = new Date(event.startDate);
+      if (isNaN(d.getTime())) return event.startDate;
+      return d.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    } catch {
+      return event.startDate;
+    }
+  }, [event.startDate]);
+
+  const cleanTicketUrl = event.ticketUrl?.startsWith('http')
+    ? event.ticketUrl
+    : `https://${event.ticketUrl || 'sortmyscene.com'}`;
+
   return (
     <section
       id="featured-event-section"
@@ -102,7 +121,7 @@ export default function FeaturedEventSection({ event }: FeaturedEventSectionProp
                   <Calendar className="w-4 h-4 text-brand-red flex-shrink-0" />
                   <div>
                     <div className="text-zinc-500 uppercase">DATE</div>
-                    <div className="text-white font-semibold">Saturday, 31 October 2026</div>
+                    <div className="text-white font-semibold">{formattedDate}</div>
                   </div>
                 </div>
 
@@ -157,13 +176,13 @@ export default function FeaturedEventSection({ event }: FeaturedEventSectionProp
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
               <a
-                href={event.ticketUrl}
+                href={cleanTicketUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-3.5 bg-brand-red hover:bg-brand-red-glow text-white text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-lg shadow-brand-red/20"
               >
                 <Ticket className="w-4 h-4" />
-                <span>GET TICKETS ON SORTMYSCENE</span>
+                <span>GET TICKETS ON {event.ticketingPlatform ? event.ticketingPlatform.toUpperCase() : 'SORTMYSCENE'}</span>
               </a>
 
               <Link
