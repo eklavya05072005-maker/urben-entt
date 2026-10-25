@@ -97,7 +97,7 @@ export default function Header() {
         {/* Action Controls */}
         <div className="hidden lg:flex items-center space-x-4">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/urban.entt?psln=c3FzcDN3d3RrNnV6&utm_source=qr"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 text-brand-muted hover:text-white hover:bg-white/5 rounded-full transition-colors"
@@ -164,7 +164,7 @@ export default function Header() {
 
           <div className="pt-4 flex items-center justify-between border-t border-white/10">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/urban.entt?psln=c3FzcDN3d3RrNnV6&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 text-xs uppercase tracking-wider text-brand-muted hover:text-white"
