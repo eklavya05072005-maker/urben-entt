@@ -101,7 +101,7 @@ export default function Footer() {
               </Link>
               <div className="pt-2">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/urban.entt?psln=c3FzcDN3d3RrNnV6&utm_source=qr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white text-xs font-mono transition-colors"
