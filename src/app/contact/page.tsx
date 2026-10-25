@@ -69,7 +69,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <div>
                     <span className="text-zinc-500 uppercase block">INSTAGRAM DISPATCHES</span>
                     <a
-                      href="https://instagram.com"
+                      href="https://www.instagram.com/urban.entt?psln=c3FzcDN3d3RrNnV6&utm_source=qr"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-white hover:text-brand-red transition-colors"
