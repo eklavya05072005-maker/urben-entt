@@ -37,11 +37,10 @@ export default function Header() {
   return (
     <header
       id="site-header"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-[#080808]/90 backdrop-blur-md border-b border-white/10 py-3 shadow-2xl'
           : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent py-5'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Wordmark Logo & Separate Compact Partner Block */}
@@ -79,11 +78,10 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-sm tracking-wider uppercase font-medium transition-colors relative py-1 ${
-                  isActive
+                className={`text-sm tracking-wider uppercase font-medium transition-colors relative py-1 ${isActive
                     ? 'text-white font-semibold'
                     : 'text-brand-muted hover:text-white'
-                }`}
+                  }`}
               >
                 {link.name}
                 {isActive && (
@@ -153,9 +151,8 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-base tracking-widest uppercase font-medium py-2 border-b border-white/5 ${
-                  pathname === link.href ? 'text-brand-red font-bold' : 'text-brand-muted hover:text-white'
-                }`}
+                className={`text-base tracking-widest uppercase font-medium py-2 border-b border-white/5 ${pathname === link.href ? 'text-brand-red font-bold' : 'text-brand-muted hover:text-white'
+                  }`}
               >
                 {link.name}
               </Link>
