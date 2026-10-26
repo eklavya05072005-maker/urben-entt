@@ -65,14 +65,14 @@ export default function PastEventsSection({ events }: PastEventsSectionProps) {
               </div>
 
               {/* Card Meta */}
-              <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
+              <div className="p-4 sm:p-6 flex flex-col flex-grow justify-between space-y-4">
                 <div>
                   <div className="flex items-center justify-between text-[11px] font-mono uppercase text-brand-red mb-2">
                     <span>{item.category}</span>
                     <span className="text-zinc-500">{item.timeDisplay}</span>
                   </div>
 
-                  <h3 className="text-xl font-display font-bold text-white uppercase group-hover:text-brand-silver transition-colors">
+                  <h3 className="text-xl font-display font-bold text-white uppercase group-hover:text-brand-silver transition-colors break-words">
                     {item.title}
                   </h3>
                   <p className="text-xs text-brand-muted mt-2 leading-relaxed line-clamp-2">

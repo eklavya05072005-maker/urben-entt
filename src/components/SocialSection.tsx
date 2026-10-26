@@ -86,7 +86,7 @@ export default function SocialSection({ mediaGallery }: SocialSectionProps) {
               INSTAGRAM DISPATCHES
             </h2>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
               onClick={() => setIsGalleryOpen(true)}
@@ -210,19 +210,19 @@ export default function SocialSection({ mediaGallery }: SocialSectionProps) {
           <button
             type="button"
             onClick={handlePrevPhoto}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/60 hover:bg-brand-red text-white border border-white/10 z-50 transition-colors"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-black/60 hover:bg-brand-red text-white border border-white/10 z-50 transition-colors"
             aria-label="Previous Photo"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           <button
             type="button"
             onClick={handleNextPhoto}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/60 hover:bg-brand-red text-white border border-white/10 z-50 transition-colors"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 bg-black/60 hover:bg-brand-red text-white border border-white/10 z-50 transition-colors"
             aria-label="Next Photo"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           <div

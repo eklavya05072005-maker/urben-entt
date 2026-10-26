@@ -30,7 +30,7 @@ export default function CollaboratorsSection({ collaborators }: CollaboratorsSec
           {collaborators.map((collab) => (
             <div
               key={collab.id}
-              className="p-8 bg-[#121212] border border-white/10 hover:border-brand-red/50 transition-all flex flex-col justify-between group"
+              className="p-6 sm:p-8 bg-[#121212] border border-white/10 hover:border-brand-red/50 transition-all flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

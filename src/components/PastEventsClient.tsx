@@ -61,12 +61,12 @@ export default function PastEventsClient({ initialEvents }: PastEventsClientProp
             </div>
 
             {/* Body */}
-            <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
+            <div className="p-4 sm:p-6 flex flex-col flex-grow justify-between space-y-4">
               <div>
                 <span className="text-[11px] font-mono text-brand-red tracking-widest uppercase block mb-1">
                   {event.category}
                 </span>
-                <h3 className="text-xl font-display font-bold text-white uppercase group-hover:text-brand-silver transition-colors">
+                <h3 className="text-xl font-display font-bold text-white uppercase group-hover:text-brand-silver transition-colors break-words">
                   {event.title}
                 </h3>
                 <p className="text-xs text-brand-muted mt-2 line-clamp-2 leading-relaxed">

@@ -75,7 +75,7 @@ export default async function EventDetailPage({ params }: PageProps) {
     <div className="pt-24 pb-24 bg-[#080808] min-h-screen text-brand-silver">
       {/* Top Breadcrumb Bar */}
       <div className="border-b border-white/10 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between text-xs font-mono">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
           <Link
             href="/events"
             className="inline-flex items-center space-x-2 text-zinc-400 hover:text-white transition-colors"
@@ -83,10 +83,10 @@ export default async function EventDetailPage({ params }: PageProps) {
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>BACK TO ALL EVENTS</span>
           </Link>
-          <div className="flex items-center space-x-3 text-zinc-500">
+          <div className="flex items-center space-x-2 sm:space-x-3 text-zinc-500">
             <span>URBEN.ENTT</span>
             <span>/</span>
-            <span className="text-brand-red uppercase">{event.slug}</span>
+            <span className="text-brand-red uppercase truncate max-w-[140px] sm:max-w-none">{event.slug}</span>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                 <span>BENGALURU</span>
               </div>
 
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black text-white tracking-tight uppercase leading-none">
+              <h1 className="text-3xl sm:text-6xl lg:text-7xl font-display font-black text-white tracking-tight uppercase leading-none break-words">
                 {event.title}
               </h1>
 
@@ -172,9 +172,9 @@ export default async function EventDetailPage({ params }: PageProps) {
                   href={event.ticketUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-4 bg-brand-red hover:bg-brand-red-glow text-white text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-xl shadow-brand-red/25"
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-4 sm:px-8 py-3.5 sm:py-4 bg-brand-red hover:bg-brand-red-glow text-white text-xs font-bold tracking-wider sm:tracking-widest uppercase transition-all duration-200 shadow-xl shadow-brand-red/25 text-center"
                 >
-                  <Ticket className="w-4 h-4" />
+                  <Ticket className="w-4 h-4 shrink-0" />
                   <span>GET TICKETS ON {event.ticketingPlatform ? event.ticketingPlatform.toUpperCase() : 'SORTMYSCENE'}</span>
                 </a>
 
@@ -230,8 +230,8 @@ export default async function EventDetailPage({ params }: PageProps) {
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover object-center"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
-                    <span className="text-xs font-mono text-white bg-black/60 px-3 py-1 border border-white/10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 sm:p-6">
+                    <span className="text-[10px] sm:text-xs font-mono text-white bg-black/60 px-2.5 sm:px-3 py-1 border border-white/10">
                       17 BOYS / 17 GIRLS • FIND YOUR COUNTERPART AT NOCTURNE
                     </span>
                   </div>

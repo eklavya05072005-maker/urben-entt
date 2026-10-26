@@ -48,7 +48,7 @@ export default function Header() {
           <div className="flex flex-col">
             <Link
               href="/"
-              className="group flex items-center space-x-2 text-white tracking-widest font-display text-xl sm:text-2xl font-black uppercase transition-colors shrink-0 leading-none"
+              className="group flex items-center space-x-1.5 sm:space-x-2 text-white tracking-widest font-display text-lg sm:text-2xl font-black uppercase transition-colors shrink-0 leading-none"
               aria-label="URBEN.ENTT Home"
             >
               <span className="text-brand-silver group-hover:text-white transition-colors">
@@ -57,7 +57,7 @@ export default function Header() {
               <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
             </Link>
             {/* Mobile partner indicator below logo */}
-            <span className="sm:hidden text-[8px] font-mono tracking-wider text-zinc-400 uppercase mt-1">
+            <span className="sm:hidden text-[8px] font-mono tracking-wider text-zinc-400 uppercase mt-0.5 sm:mt-1 truncate max-w-[140px]">
               APEX <span className="text-brand-red">×</span> BLAH BLA
             </span>
           </div>
@@ -124,17 +124,17 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center space-x-2 lg:hidden">
+        <div className="flex items-center space-x-2 lg:hidden shrink-0">
           <Link
             href="/contact"
-            className="px-3 py-1.5 text-xs uppercase font-bold bg-brand-red text-white"
+            className="px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs uppercase font-bold bg-brand-red text-white"
           >
             Enquire
           </Link>
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-white hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red"
+            className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center text-white hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red"
             aria-expanded={isMobileMenuOpen}
             aria-label="Toggle mobile menu"
           >
@@ -145,13 +145,13 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[#0a0a0a] border-b border-white/10 px-6 pt-4 pb-8 space-y-4 animate-fade-in shadow-2xl">
-          <nav className="flex flex-col space-y-3" aria-label="Mobile Navigation">
+        <div className="lg:hidden bg-[#0a0a0a] border-b border-white/10 px-5 sm:px-6 pt-4 pb-8 space-y-4 animate-fade-in shadow-2xl max-h-[calc(100svh-4.5rem)] overflow-y-auto">
+          <nav className="flex flex-col space-y-2 sm:space-y-3" aria-label="Mobile Navigation">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-base tracking-widest uppercase font-medium py-2 border-b border-white/5 ${pathname === link.href ? 'text-brand-red font-bold' : 'text-brand-muted hover:text-white'
+                className={`text-base tracking-widest uppercase font-medium py-2.5 border-b border-white/5 transition-colors ${pathname === link.href ? 'text-brand-red font-bold' : 'text-brand-muted hover:text-white'
                   }`}
               >
                 {link.name}
@@ -164,7 +164,7 @@ export default function Header() {
               href="https://www.instagram.com/urban.entt?psln=c3FzcDN3d3RrNnV6&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-xs uppercase tracking-wider text-brand-muted hover:text-white"
+              className="flex items-center space-x-2 text-xs uppercase tracking-wider text-brand-muted hover:text-white min-h-[40px]"
             >
               <Instagram className="w-4 h-4 text-brand-red" />
               <span>Instagram</span>
@@ -172,7 +172,7 @@ export default function Header() {
 
             <Link
               href="/event-admin"
-              className="flex items-center space-x-2 text-xs uppercase tracking-wider text-zinc-400 hover:text-white"
+              className="flex items-center space-x-2 text-xs uppercase tracking-wider text-zinc-400 hover:text-white min-h-[40px]"
             >
               <ShieldCheck className="w-4 h-4 text-brand-red" />
               <span>Admin Portal</span>

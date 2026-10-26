@@ -122,16 +122,16 @@ export default function EventModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-3xl bg-[#111111] border border-white/15 my-8 p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-3xl bg-[#111111] border border-white/15 my-4 sm:my-8 p-4 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
-          <h2 className="text-xl font-display font-black text-white uppercase">
+          <h2 className="text-base sm:text-xl font-display font-black text-white uppercase truncate mr-2">
             {isEditing ? `EDIT EVENT: ${event?.title}` : 'CREATE NEW EVENT DRAFT'}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-zinc-400 hover:text-white"
+            className="p-1.5 text-zinc-400 hover:text-white shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -424,18 +424,18 @@ export default function EventModal({
             )}
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-6 border-t border-white/10">
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 sm:space-x-3 pt-6 border-t border-white/10">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 border border-white/10 text-zinc-400 hover:text-white"
+              className="w-full sm:w-auto px-4 py-2.5 border border-white/10 text-zinc-400 hover:text-white text-center"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 bg-brand-red hover:bg-brand-red-glow text-white font-bold uppercase tracking-wider flex items-center space-x-2"
+              className="w-full sm:w-auto px-6 py-2.5 bg-brand-red hover:bg-brand-red-glow text-white font-bold uppercase tracking-wider flex items-center justify-center space-x-2"
             >
               {isSubmitting ? (
                 <>

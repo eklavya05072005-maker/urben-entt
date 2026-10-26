@@ -19,10 +19,10 @@ export default function AboutPage() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>ABOUT URBEN.ENTT</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight uppercase leading-[1.08] mb-8">
+          <h1 className="text-3xl sm:text-6xl font-display font-black text-white tracking-tight uppercase leading-[1.08] mb-6 sm:mb-8 break-words">
             WE CREATE MOMENTS THAT MATTER.
           </h1>
-          <p className="text-xl sm:text-2xl font-light text-zinc-300 leading-relaxed border-l-2 border-brand-red pl-6 py-2">
+          <p className="text-lg sm:text-2xl font-light text-zinc-300 leading-relaxed border-l-2 border-brand-red pl-4 sm:pl-6 py-2">
             “We bring people together through thoughtfully created events, immersive experiences, and moments worth remembering.”
           </p>
         </div>

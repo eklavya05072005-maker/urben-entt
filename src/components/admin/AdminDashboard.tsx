@@ -251,10 +251,10 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
           </span>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 sm:space-x-4 shrink-0">
           <div className="text-right">
-            <div className="text-xs font-mono text-white font-bold">{user.fullName}</div>
-            <div className="text-[10px] font-mono uppercase text-brand-red font-semibold">
+            <div className="text-xs font-mono text-white font-bold truncate max-w-[120px] sm:max-w-none">{user.fullName}</div>
+            <div className="text-[9px] sm:text-[10px] font-mono uppercase text-brand-red font-semibold">
               ROLE: {user.role.replace('_', ' ')}
             </div>
           </div>
@@ -303,11 +303,11 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
 
         {/* Tab Header & Action Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 mb-8">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 max-w-full">
             <button
               type="button"
               onClick={() => setActiveTab('events')}
-              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors shrink-0 whitespace-nowrap ${
                 activeTab === 'events'
                   ? 'bg-brand-red text-white font-bold'
                   : 'bg-white/5 text-zinc-400 hover:text-white'
@@ -320,7 +320,7 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
             <button
               type="button"
               onClick={() => setActiveTab('enquiries')}
-              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors shrink-0 whitespace-nowrap ${
                 activeTab === 'enquiries'
                   ? 'bg-brand-red text-white font-bold'
                   : 'bg-white/5 text-zinc-400 hover:text-white'
@@ -333,7 +333,7 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
             <button
               type="button"
               onClick={() => setActiveTab('media')}
-              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors shrink-0 whitespace-nowrap ${
                 activeTab === 'media'
                   ? 'bg-brand-red text-white font-bold'
                   : 'bg-white/5 text-zinc-400 hover:text-white'
@@ -346,7 +346,7 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
             <button
               type="button"
               onClick={() => setActiveTab('audit')}
-              className={`px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-xs font-mono uppercase tracking-wider flex items-center space-x-2 transition-colors shrink-0 whitespace-nowrap ${
                 activeTab === 'audit'
                   ? 'bg-brand-red text-white font-bold'
                   : 'bg-white/5 text-zinc-400 hover:text-white'
@@ -364,7 +364,7 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
                 setEditingEvent(null);
                 setIsModalOpen(true);
               }}
-              className="inline-flex items-center space-x-2 px-4 py-2 bg-white/10 hover:bg-brand-red text-white text-xs font-mono uppercase tracking-wider font-bold transition-all"
+              className="inline-flex items-center justify-center space-x-2 px-4 py-2 bg-white/10 hover:bg-brand-red text-white text-xs font-mono uppercase tracking-wider font-bold transition-all w-full sm:w-auto shrink-0"
             >
               <Plus className="w-4 h-4" />
               <span>Create Event Draft</span>
@@ -679,7 +679,7 @@ export default function AdminDashboard({ initialUser, onLogout }: AdminDashboard
 
             {/* Existing Uploaded Media Grid */}
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <h4 className="text-sm font-display font-bold text-white uppercase tracking-wider">
                   GALLERY ASSETS ({mediaGallery.length})
                 </h4>

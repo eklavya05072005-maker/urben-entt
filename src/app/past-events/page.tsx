@@ -22,7 +22,7 @@ export default async function PastEventsPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-brand-red mb-3">
             ARCHIVE & RETROSPECTIVES
           </div>
-          <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight uppercase mb-4">
+          <h1 className="text-3xl sm:text-6xl font-display font-black text-white tracking-tight uppercase mb-4 break-words">
             PAST PRODUCTIONS
           </h1>
           <p className="text-brand-muted text-sm sm:text-base leading-relaxed">
@@ -32,7 +32,7 @@ export default async function PastEventsPage() {
 
         <PastEventsClient initialEvents={events} />
 
-        <div className="mt-20 p-8 sm:p-12 bg-[#0e0e0e] border border-white/10">
+        <div className="mt-16 sm:mt-20 p-6 sm:p-12 bg-[#0e0e0e] border border-white/10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7 space-y-4">
               <span className="text-xs font-mono uppercase tracking-widest text-brand-red block">

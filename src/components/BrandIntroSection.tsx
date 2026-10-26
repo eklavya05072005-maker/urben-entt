@@ -16,7 +16,7 @@ export default function BrandIntroSection() {
               <span>THE URBEN PHILOSOPHY</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight uppercase leading-[1.1]">
+            <h2 className="text-2xl sm:text-5xl font-display font-black text-white tracking-tight uppercase leading-[1.15] sm:leading-[1.1] break-words">
               WE BRING PEOPLE TOGETHER THROUGH{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-silver via-zinc-300 to-zinc-500">
                 THOUGHTFULLY CREATED EVENTS

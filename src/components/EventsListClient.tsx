@@ -123,14 +123,14 @@ export default function EventsListClient({ events }: EventsListClientProps) {
                   <span className="text-[10px] font-mono text-brand-red tracking-widest uppercase block mb-1">
                     {event.category}
                   </span>
-                  <h3 className="text-2xl font-display font-black text-white uppercase tracking-tight group-hover:text-brand-silver transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-display font-black text-white uppercase tracking-tight group-hover:text-brand-silver transition-colors break-words">
                     {event.title}
                   </h3>
                 </div>
               </div>
 
               {/* Body */}
-              <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
+              <div className="p-4 sm:p-6 flex flex-col flex-grow justify-between space-y-4">
                 <div className="space-y-3">
                   <p className="text-xs text-brand-muted line-clamp-2 leading-relaxed">
                     {event.shortDescription}
@@ -149,7 +149,7 @@ export default function EventsListClient({ events }: EventsListClientProps) {
                 </div>
 
                 {/* Actions */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-2">
+                <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
                   <Link
                     href={`/events/${event.slug}`}
                     className="inline-flex items-center space-x-1.5 text-xs font-mono uppercase tracking-wider text-white hover:text-brand-red transition-colors"

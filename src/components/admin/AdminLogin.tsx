@@ -41,7 +41,7 @@ export default function AdminLogin({ onSuccess }: AdminLoginProps) {
 
   return (
     <div className="min-h-screen bg-[#080808] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#111111] border border-white/10 p-8 shadow-2xl relative">
+      <div className="w-full max-w-md bg-[#111111] border border-white/10 p-6 sm:p-8 shadow-2xl relative">
         <div className="text-center mb-8">
           <div className="inline-flex p-3 bg-brand-red/10 border border-brand-red/30 rounded-full mb-3 text-brand-red">
             <ShieldCheck className="w-8 h-8" />
@@ -117,7 +117,7 @@ export default function AdminLogin({ onSuccess }: AdminLoginProps) {
           <p className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mb-2 text-center">
             Authorized Account Roles:
           </p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => setRoleEmail('owner@urben.entt')}

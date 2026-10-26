@@ -56,7 +56,7 @@ export default function HomeClientWrapper({
             <div className="text-xs font-mono uppercase tracking-widest text-brand-red mb-2">
               INITIATE A CONVERSATION
             </div>
-            <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight uppercase">
+            <h2 className="text-2xl sm:text-5xl font-display font-black text-white tracking-tight uppercase break-words">
               CREATE WITH URBEN
             </h2>
             <p className="text-brand-muted text-sm sm:text-base mt-3 max-w-lg mx-auto">
@@ -64,7 +64,7 @@ export default function HomeClientWrapper({
             </p>
           </div>
 
-          <div className="bg-[#111111] border border-white/10 p-6 sm:p-10 shadow-2xl">
+          <div className="bg-[#111111] border border-white/10 p-4 sm:p-10 shadow-2xl">
             <EnquiryForm />
           </div>
         </div>

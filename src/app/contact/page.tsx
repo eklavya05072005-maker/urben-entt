@@ -29,7 +29,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>CONNECT WITH URBEN.ENTT</span>
               </div>
-              <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight uppercase leading-none mb-4">
+              <h1 className="text-3xl sm:text-6xl font-display font-black text-white tracking-tight uppercase leading-tight sm:leading-none mb-4 break-words">
                 INITIATE AN ENQUIRY
               </h1>
               <p className="text-brand-muted text-sm sm:text-base leading-relaxed">
@@ -90,7 +90,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </div>
 
           {/* Right Column: Interactive Form */}
-          <div className="lg:col-span-7 bg-[#101010] border border-white/10 p-6 sm:p-10 shadow-2xl">
+          <div className="lg:col-span-7 bg-[#101010] border border-white/10 p-4 sm:p-10 shadow-2xl">
             <h2 className="text-xl font-display font-black text-white uppercase tracking-wide mb-6">
               PROJECT BRIEF SPECIFICATIONS
             </h2>

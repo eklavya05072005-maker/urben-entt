@@ -18,7 +18,7 @@ export default function ServicesPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-brand-red mb-3">
             CAPABILITIES & EXPERTISE
           </div>
-          <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight uppercase mb-4">
+          <h1 className="text-3xl sm:text-6xl font-display font-black text-white tracking-tight uppercase mb-4 break-words">
             WHAT WE ENGINEER
           </h1>
           <p className="text-brand-muted text-sm sm:text-base leading-relaxed">
@@ -29,7 +29,7 @@ export default function ServicesPage() {
         {/* Detailed Services Breakdown */}
         <div className="space-y-16">
           {/* 1. Festivals & Concerts */}
-          <div className="p-8 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
+          <div className="p-6 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-5 space-y-4">
                 <div className="p-3 bg-white/5 border border-white/10 w-fit">
@@ -82,7 +82,7 @@ export default function ServicesPage() {
           </div>
 
           {/* 2. Music & Nightlife */}
-          <div className="p-8 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
+          <div className="p-6 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-5 space-y-4">
                 <div className="p-3 bg-white/5 border border-white/10 w-fit">
@@ -135,7 +135,7 @@ export default function ServicesPage() {
           </div>
 
           {/* 3. Corporate Events */}
-          <div className="p-8 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
+          <div className="p-6 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-5 space-y-4">
                 <div className="p-3 bg-white/5 border border-white/10 w-fit">
@@ -188,7 +188,7 @@ export default function ServicesPage() {
           </div>
 
           {/* 4. Experiences & Parties */}
-          <div className="p-8 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
+          <div className="p-6 sm:p-12 bg-[#111111] border border-white/10 hover:border-brand-red/40 transition-colors">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-5 space-y-4">
                 <div className="p-3 bg-white/5 border border-white/10 w-fit">

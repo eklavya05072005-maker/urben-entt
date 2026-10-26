@@ -21,7 +21,7 @@ export default async function EventsPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-brand-red mb-3">
             URBEN.ENTT CALENDAR
           </div>
-          <h1 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight uppercase mb-4">
+          <h1 className="text-3xl sm:text-6xl font-display font-black text-white tracking-tight uppercase mb-4 break-words">
             CONFIRMED EXPERIENCES
           </h1>
           <p className="text-brand-muted text-sm sm:text-base leading-relaxed">

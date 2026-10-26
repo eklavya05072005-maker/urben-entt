@@ -41,7 +41,7 @@ export default function VideoModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="video-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/95 backdrop-blur-2xl animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/95 backdrop-blur-2xl animate-fade-in"
       onClick={onClose}
     >
       <div
@@ -49,17 +49,17 @@ export default function VideoModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header bar */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 bg-black/60">
-          <h2 id="video-modal-title" className="text-sm font-display uppercase tracking-wider text-white font-bold">
+        <div className="flex items-center justify-between px-3 sm:px-5 py-2.5 sm:py-3 border-b border-white/10 bg-black/60">
+          <h2 id="video-modal-title" className="text-xs sm:text-sm font-display uppercase tracking-wider text-white font-bold truncate mr-2">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-zinc-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+            className="p-1.5 text-zinc-400 hover:text-white hover:bg-white/10 rounded transition-colors shrink-0"
             aria-label="Close video player"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 

@@ -57,7 +57,7 @@ export default function FeaturedEventSection({ event }: FeaturedEventSectionProp
         </div>
 
         {/* Featured Card Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#0d0d0d] border border-white/10 p-6 sm:p-10 lg:p-12 relative group hover:border-brand-red/40 transition-colors duration-500">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#0d0d0d] border border-white/10 p-4 sm:p-10 lg:p-12 relative group hover:border-brand-red/40 transition-colors duration-500">
           {/* Main Visual Poster Column */}
           <div className="lg:col-span-5 relative">
             <div className="relative aspect-[3/4] w-full overflow-hidden border border-white/15 shadow-2xl red-edge-glow">
@@ -75,9 +75,9 @@ export default function FeaturedEventSection({ event }: FeaturedEventSectionProp
               <div className="absolute top-4 left-4 px-3 py-1 bg-brand-red text-white text-[11px] font-mono uppercase tracking-wider font-bold">
                 CONFIRMED DATE
               </div>
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white font-mono bg-black/70 backdrop-blur-md px-3 py-2 border border-white/10">
-                <span>{event.ticketingPlatform} VERIFIED</span>
-                <span className="text-brand-red">{event.ticketStatus}</span>
+              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between text-[11px] sm:text-xs text-white font-mono bg-black/70 backdrop-blur-md px-2.5 sm:px-3 py-2 border border-white/10">
+                <span className="truncate mr-1">{event.ticketingPlatform} VERIFIED</span>
+                <span className="text-brand-red shrink-0">{event.ticketStatus}</span>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function FeaturedEventSection({ event }: FeaturedEventSectionProp
                 <span>BENGALURU</span>
               </div>
 
-              <h3 className="text-4xl sm:text-6xl font-display font-black text-white tracking-tight uppercase leading-none mb-2">
+              <h3 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight uppercase leading-none mb-2 break-words">
                 {event.title}
               </h3>
               <p className="text-lg sm:text-xl font-display font-medium text-brand-red tracking-wide uppercase mb-6">
@@ -179,9 +179,9 @@ export default function FeaturedEventSection({ event }: FeaturedEventSectionProp
                 href={cleanTicketUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-8 py-3.5 bg-brand-red hover:bg-brand-red-glow text-white text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-lg shadow-brand-red/20"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-4 sm:px-8 py-3.5 bg-brand-red hover:bg-brand-red-glow text-white text-xs font-bold tracking-wider sm:tracking-widest uppercase transition-all duration-200 shadow-lg shadow-brand-red/20 text-center"
               >
-                <Ticket className="w-4 h-4" />
+                <Ticket className="w-4 h-4 shrink-0" />
                 <span>GET TICKETS ON {event.ticketingPlatform ? event.ticketingPlatform.toUpperCase() : 'SORTMYSCENE'}</span>
               </a>
 

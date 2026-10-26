@@ -49,7 +49,7 @@ export default function HeroVideo({ featuredEvent, onOpenFilmModal }: HeroVideoP
   return (
     <section
       id="hero-section"
-      className="relative w-full h-[100svh] min-h-[640px] flex items-center justify-center overflow-hidden bg-black"
+      className="relative w-full min-h-[600px] h-auto sm:h-[100svh] sm:min-h-[640px] flex items-center justify-center overflow-hidden bg-black py-20 sm:py-0"
       aria-label="URBEN.ENTT Experience Hero"
     >
       {/* Background Video / Fallback Poster (Permanently muted, loop, autoplay) */}
@@ -85,9 +85,9 @@ export default function HeroVideo({ featuredEvent, onOpenFilmModal }: HeroVideoP
       </div>
 
       {/* Hero Foreground Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center h-full pt-20 pb-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center h-full pt-16 sm:pt-20 pb-16 sm:pb-20">
         {/* Master Tagline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-display tracking-tight text-white uppercase leading-[1.05] max-w-5xl animate-reveal">
+        <h1 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-display tracking-tight text-white uppercase leading-[1.08] sm:leading-[1.05] max-w-5xl animate-reveal break-words">
           WE CREATE <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-zinc-400">
             MOMENTS THAT{' '}
@@ -101,13 +101,13 @@ export default function HeroVideo({ featuredEvent, onOpenFilmModal }: HeroVideoP
 
         {/* Dynamic Featured Upcoming Event Preview Banner */}
         {featuredEvent && !featuredEvent.isPast && (
-          <div className="mt-8 max-w-2xl w-full p-4 sm:p-5 border border-white/10 bg-black/50 backdrop-blur-xl rounded-none text-left transition-all hover:border-brand-red/50 hover:bg-black/70 group">
-            <div className="flex items-center justify-between text-xs font-mono uppercase text-brand-red mb-1.5">
+          <div className="mt-6 sm:mt-8 max-w-2xl w-full p-4 sm:p-5 border border-white/10 bg-black/50 backdrop-blur-xl rounded-none text-left transition-all hover:border-brand-red/50 hover:bg-black/70 group">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono uppercase text-brand-red mb-1.5">
               <span className="flex items-center space-x-1.5">
                 <span className="w-2 h-2 rounded-full bg-brand-red animate-ping" />
-                <span className="font-bold tracking-wider">UPCOMING CONFIRMED EXPERIENCE</span>
+                <span className="font-bold tracking-wider text-[11px] sm:text-xs">UPCOMING CONFIRMED EXPERIENCE</span>
               </span>
-              <span className="text-zinc-400 font-sans tracking-widest">{featuredEvent.category}</span>
+              <span className="text-zinc-400 font-sans tracking-wider sm:tracking-widest text-[11px] sm:text-xs">{featuredEvent.category}</span>
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
